@@ -363,12 +363,6 @@ class PerformancePanel(FlexPanel, bpy.types.Panel):
         col = flexcol.column(align = True)
         col.label("Memory")
         col.prop(render, "use_save_buffers", text = "Save Buffers")
-        col.prop(render, "use_free_image_textures", text = "Free Image Textures")
-        col = flexcol.column(align = True)
-        col.label("Acceleration Structure")
-        col.prop(render, "raytrace_method", text = "")
-        col.prop(render, "use_instances", text = "Instances")
-        col.prop(render, "use_local_coords", text = "Local Coordinates")
 
 class SearchOperator(bpy.types.Operator):
     bl_idname = "flexlayout.search"
