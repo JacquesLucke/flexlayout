@@ -34,8 +34,8 @@ class FlexGroup:
     def __init__(self):
         self.elements = []
 
-    def column(self):
-        col = FlexColumn()
+    def column(self, *, align = False):
+        col = FlexColumn(align)
         self.elements.append(col)
         return col
 
@@ -44,17 +44,18 @@ class FlexGroup:
             element.render(layout, width)
 
 class FlexColumn:
-    def __init__(self):
+    def __init__(self, align = False):
         self.elements = []
+        self.align = align
 
     def label(self, text):
         self.elements.append(FlexLabel(text))
 
-    def prop(self, data, attribute, text):
+    def prop(self, data, attribute, *, text):
         self.elements.append(FlexProp(data, attribute, text))
 
     def render(self, layout, width):
-        col = layout.column()
+        col = layout.column(align = self.align)
         for element in self.elements:
             element.render(col, width)
 
@@ -66,7 +67,7 @@ class FlexLabel:
         layout.label(self.text)
 
 class FlexProp:
-    def __init__(self, data, attribute, text):
+    def __init__(self, data, attribute, text = None):
         self.data = data
         self.attribute = attribute
         self.text = text
@@ -100,18 +101,18 @@ class DimensionsPanel(FlexPanel, bpy.types.Panel):
         render = scene.render
 
         group = flex.group()
-        col = group.column()
+        col = group.column(align = True)
         col.label("Resolution")
-        col.prop(render, "resolution_x", "X")
-        col.prop(render, "resolution_y", "Y")
-        col.prop(render, "resolution_percentage", "")
+        col.prop(render, "resolution_x", text = "X")
+        col.prop(render, "resolution_y", text = "Y")
+        col.prop(render, "resolution_percentage", text = "")
 
         group = flex.group()
-        col = group.column()
+        col = group.column(align = True)
         col.label("Frame Rate")
-        col.prop(scene, "frame_start", "Start Frame")
-        col.prop(scene, "frame_end", "End Frame")
-        col.prop(scene, "frame_step", "Frame Step")
+        col.prop(scene, "frame_start", text = "Start Frame")
+        col.prop(scene, "frame_end", text = "End Frame")
+        col.prop(scene, "frame_step", text = "Frame Step")
 
 
 panels = [
